@@ -32,6 +32,26 @@ public class FriendController {
 
     //https://hibernatepostgresql.herokuapp.com/add?name=Makiko&address=tokyo1&tele=1111111111
 
+    @GetMapping(path = "/remove")
+    public String removeFriendById_Name_Tele(@RequestParam String id,
+                                             @RequestParam String name,
+                                             @RequestParam String tele) {
+
+        if (id != null && name != null) {
+            //friendRepo.findByNameAndAddress(id,name);
+            friendRepo.deleteAll(friendRepo.findByNameAndAddress(id, name));
+            return "The record which include " + "id:" + id + " name:" + name + " was removed";
+        } else if (name != null) {
+            friendRepo.deleteAll(friendRepo.findByName(name));
+            return "The record which include " + name + " was removed";
+        } else if (tele != null) {
+            friendRepo.deleteAll(friendRepo.findByTele(tele));
+            return "The record which include " + tele + " was removed";
+        }
+        return "It couldn´t be found to remove!";
+
+    }
+
     @GetMapping(path = "/all")
     public @ResponseBody
     Iterable<Friend> getAllFriends() {
@@ -58,9 +78,9 @@ public class FriendController {
         }
         return null;
     }
-    //http://localhost:8080/friend/find?name=Mika
-    //http://localhost:8080/friend/find?name=Midori&address=alvgen4
-    //http://localhost:8080/friend/find?tele=3333333333
-    //http://localhost:8080/friend/find?address=takatsuki2 -> [{"i
+//http://localhost:8080/friend/find?name=Mika
+//http://localhost:8080/friend/find?name=Midori&address=alvgen4
+//http://localhost:8080/friend/find?tele=3333333333
+//http://localhost:8080/friend/find?address=takatsuki2 -> [{"i
 
 }
