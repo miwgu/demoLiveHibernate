@@ -40,13 +40,13 @@ public class FriendController {
         if (id != null && name != null) {
             //friendRepo.findByNameAndAddress(id,name);
             friendRepo.deleteAll(friendRepo.findByNameAndAddress(id, name));
-            return "The record which include " + "id:" + id + " name:" + name + " was removed";
+            return "The record which includes " + "id:" + id + " name:" + name + " was removed";
         } else if (name != null) {
             friendRepo.deleteAll(friendRepo.findByName(name));
-            return "The record which include " + name + " was removed";
+            return "The record which includes " + name + " was removed";
         } else if (tele != null) {
             friendRepo.deleteAll(friendRepo.findByTele(tele));
-            return "The record which include " + tele + " was removed";
+            return "The record which includes " + tele + " was removed";
         }
         return "It couldn´t be found to remove!";
 
