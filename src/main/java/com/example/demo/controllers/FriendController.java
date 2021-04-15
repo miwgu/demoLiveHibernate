@@ -19,37 +19,41 @@ public class FriendController {
     @Autowired
     private FriendRepository friendRepo;
 
-    @GetMapping(path="/add")
-    public  String addFriend(@RequestParam String name, @RequestParam String address, @RequestParam String tele){
+    @GetMapping(path = "/add")
+    public String addFriend(@RequestParam String name, @RequestParam String address, @RequestParam String tele) {
         Friend f = new Friend();
         f.setName(name);
         f.setAddress(address);
         f.setTele(tele);
         friendRepo.save(f);
-        return  "The friend was saved";
+        return "The friend was saved";
     }
     //http://localhost:8080/friend/add?name=Mika&address=osaka3&tele=3333333333
 
-    @GetMapping(path="/all")
-    public @ResponseBody Iterable<Friend> getAllFriends(){
+    //https://hibernatepostgresql.herokuapp.com/add?name=Makiko&address=tokyo1&tele=1111111111
+
+    @GetMapping(path = "/all")
+    public @ResponseBody
+    Iterable<Friend> getAllFriends() {
         return friendRepo.findAll();
     }
     //http://localhost:8080/friend/all
 
-    @GetMapping(path="/find")
-    public  @ResponseBody Iterable<Friend> getFriendByName_Adress_Tele(@RequestParam(required = false)String name,
-                                                           @RequestParam(required = false)String address,
-                                                           @RequestParam(required = false)String tele){
-        if(name!=null&& address!=null){
-            return friendRepo.findByNameAndAddress(name,address);
-        }
-        else if(name!=null){
-            return  friendRepo.findByName(name);
-        }
-        else if(address!=null){
+    //https://hibernatepostgresql.herokuapp.com/friend/all
+
+    @GetMapping(path = "/find")
+    public @ResponseBody
+    Iterable<Friend> getFriendByName_Adress_Tele(@RequestParam(required = false) String name,
+                                                 @RequestParam(required = false) String address,
+                                                 @RequestParam(required = false) String tele) {
+        if (name != null && address != null) {
+            return friendRepo.findByNameAndAddress(name, address);
+        } else if (name != null) {
+            return friendRepo.findByName(name);
+        } else if (address != null) {
             return friendRepo.findByAddress(address);
 
-        }else if(tele!=null){
+        } else if (tele != null) {
             return friendRepo.findByTele(tele);
         }
         return null;
@@ -57,5 +61,6 @@ public class FriendController {
     //http://localhost:8080/friend/find?name=Mika
     //http://localhost:8080/friend/find?name=Midori&address=alvgen4
     //http://localhost:8080/friend/find?tele=3333333333
-    //http://localhost:8080/friend/find?address=takatsuki2 ->
+    //http://localhost:8080/friend/find?address=takatsuki2 -> [{"i
+
 }
